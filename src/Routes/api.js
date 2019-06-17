@@ -49,13 +49,19 @@ const secretKey = "sc_testApp"
 //          }
 //     })
     
-// })   
+// })
+
+// router.get("/demo" ,(req,res) => {
+
+//     const key = config.get('jwtSecret')
+//     console.log( key )
+
+// })
 
 
 router.post("/StudentRegistration" , (req , res) => {
-
     const { name , email , number  , address , password } =  req.body
-    console.log( name , email , number, address , password)
+
     if (!name || !email || !password || !number || !address) {
         res.status(400).json({msg : "please enter valid credentials"})
     }
@@ -75,29 +81,6 @@ router.post("/StudentRegistration" , (req , res) => {
         number
     })
 
-    // create sale & hash 
-    // bcrypt.genSalt(10 , (err , salt ) =>{
-    //     bcrypt.hash(newUser.password , salt , (err , hash) => {
-    //         if( err ) throw err;
-    //         newUser.password = hash;
-    //         newUser.save()
-    //         .then((user) => {
-    //             return res.json({
-    //                 user:{
-    //                     id:user.id,
-    //                     name:user.name,
-    //                     address:user.address,
-    //                     email: user.email,
-    //                     number:user.number
-
-
-    //                 }
-    //             })
-    //         })
-    //     })
-    // })
-    
-
      // Create salt & hash
      
      bcrypt.genSalt(10,(err , salt)=>{
@@ -105,21 +88,41 @@ router.post("/StudentRegistration" , (req , res) => {
             if(err) throw err;
             newUser.password = hash;
             newUser.save().then( user => {
-                  jwt.sign(
-                      { id:user.id } , 
-                      secretKey,
-                      null,
-                      (err , token ) => {
-                          if( err ) throw err;
-                          return res.json({
-                              token,
-                              user,
-                          })
-                      })
+               return res.json({ user })
+
             })
         })
    })
 })
+
+
+
+router.post("/studentLogin" , ( req , res ) => {
+    const { email , password } = req.body
+    if (!email || ! password)
+    {
+        return res.status(400).json({msg:"invalid credentials"})
+    }
+    StudentRegistration.findOne({email}).then(( user ) => {
+        console.log(user)
+        if(!user) {
+            return res.status(400).json({msg:"no such user found "})
+        } 
+            jwt.sign(
+                { id:user.id } , 
+                secretKey,
+                {expiresIn : "2m"},
+                (err , token ) => {
+                    if( err ) throw err;
+                    return res.json({
+                        token,
+                        user,
+                    })
+                })
+        })
+    })  
+    
+
 
 
 

@@ -22,7 +22,20 @@ const studentSchema = new Schema({
         type:String,
         required: [true , "password is required"]
     },
-    Registeredcourses:[]
+    Registeredcourses:[{ type: Schema.Types.ObjectId, ref: 'Course' }]
 })
+
+
+
+studentSchema.pre('save', function (next) {
+    bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(this.password, salt, (err, hash) => {
+            this.password = hash;
+            // this.saltSecret = salt;
+            next();
+        });
+    });
+});
+
 const StudentRegistration = mongoose.model("StudentRegistration" , studentSchema)
 module.exports= StudentRegistration 
