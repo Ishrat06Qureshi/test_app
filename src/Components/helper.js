@@ -3,8 +3,8 @@ var formate = /^[a-zA-Z0-9#`.,/\s"-]*$/
 
 
 
-const dataValidation = ( data ) => {
-console.log( data )
+export const dataValidation = ( data ) => {
+
     let errors = {} 
     if (data) {
             data.name = isEmpty( data.name) ? data.name : ""
@@ -90,4 +90,16 @@ console.log( data )
     
 }
 
- export default dataValidation
+export const loginValidation = ( data )=> {
+   let errors = {} 
+   if(!data.email.length){
+       errors.email = "Email is required"
+   }
+   if(!data.password.length){
+    errors.password = "password is required"
+   }
+   return errors
+ } 
+
+
+ 

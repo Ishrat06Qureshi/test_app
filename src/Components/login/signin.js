@@ -1,25 +1,27 @@
 import React , { Component }  from "react";
+import axios from "axios";
 import "../styles.css";
+
 class Signin extends Component {
 
     state = {
-        email:"",
-        password:""
+     
+        errors:{}
     }
 
-
-    handleOnChange = ( event ) => {
-      this.setState(({
-          [event.target.name] : event.target.value
-      }))
-    }
-
-    handleSubmit = () => {
-        console.log( this.state )
-    }
+    handleSubmit = ( event ) => {
+         const { email , password , errors  } = this.state
+         if(!email) {
+             errors.email  = "please fill the email" 
+         }
+         if(!password) {
+             errors.password = "please enter the password"
+         }
+         
+    } 
     render(){
-
-        const {  password  , email } = this.state 
+        console.log(this.props )
+        const {  data , handleOnChange} = this.props
         return (<div className="form-container sign-in-container">
               <form onSubmit = { this.handleSubmit}>
               <h1> Sign in </h1>
@@ -30,8 +32,8 @@ class Signin extends Component {
 				<a href="#"><i className="fab fa-linkedin-in"></i></a>
                 </div>  
                 <span>or use your account </span> 
-              <input type="email"  name = "email"  placeholder = "email" value={ email }  onChange = { this.handleOnChange} />
-              <input type="password"  name = "password"  placeholder = "password" value={ password }   onChange = { this.handleOnChange}/>
+              <input type="email"  name = "email"  placeholder = "email" value={ data.email }  onChange = { handleOnChange} />
+              <input type="password"  name = "password"  placeholder = "password" value={ data.password }   onChange = { handleOnChange}/>
               <button type="submit"> Login </button>
               </form>
             </div>)

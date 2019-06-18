@@ -7,10 +7,25 @@ import "../styles.css";
 
 
 class Container extends Component {
-
     state = {
-        show:false
+        show:false,
+        name:"",
+        number:"",
+        address:"",
+        email:"",
+        password:"" ,
+        errors:{},
+        isLoading:false,   
+        errMsg:"",
+        successfullyRegister :false,
+       
     }
+
+    handleOnChange = ( event ) => {
+        this.setState(({
+            [event.target.name] : event.target.value
+        }))
+      }
 
     toggleClassName = ( flag ) => {
         this.setState(({
@@ -18,13 +33,31 @@ class Container extends Component {
             }))
     }
  
-    render(){
 
+    reset = () => {
+        this.setState(({
+        name:"",
+        number:"",
+        address:"",
+        email:"",
+        password:"" ,
+        errors:{},
+        isLoading:false,   
+        errMsg:"",
+        successfullyRegister :false,
+        email:"",
+        password:"",
+        }))
+    }
+    render(){
+       
         const { show } = this.state 
-    return (<div className={ show ? 'container right-panel-active' : 'container'}>
-        <Signin/>
-        <Signup/>
-        <Overlay toggleClassName={ this.toggleClassName } />
+
+         return (
+         <div className={ show ? 'container right-panel-active' : 'container'}>
+                <Signin handleOnChange = { this.handleOnChange } data = {this.state}/>
+                <Signup handleOnChange = { this.handleOnChange } data = {this.state} />
+                <Overlay toggleClassName={ this.toggleClassName } reset = { this.reset } />
         
         
     </div>)
