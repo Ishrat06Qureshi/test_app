@@ -1,13 +1,16 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Container from "./Components/login/container";
-
+import {  Switch , Route} from "react-router-dom";
+import Dashboard from "./Components/Dashboard";
 function App() {
   return (
-    <div>
-     <Container/>
-    </div>
+   
+    <Switch>
+      <Route  exact path="/" component={ Container }/>
+      <Route  path="/dashboard" component={ Dashboard }/>
+      
+    </Switch>
   );
 }
 

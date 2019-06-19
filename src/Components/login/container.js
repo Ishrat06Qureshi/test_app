@@ -45,9 +45,13 @@ class Container extends Component {
         isLoading:false,   
         errMsg:"",
         successfullyRegister :false,
-        email:"",
-        password:"",
+    
         }))
+    }
+
+    setFlags = ( Flags) => {
+            console.log( Flags )
+            this.setState(({ ...Flags }))
     }
     render(){
        
@@ -55,8 +59,8 @@ class Container extends Component {
 
          return (
          <div className={ show ? 'container right-panel-active' : 'container'}>
-                <Signin handleOnChange = { this.handleOnChange } data = {this.state}/>
-                <Signup handleOnChange = { this.handleOnChange } data = {this.state} />
+                <Signin handleOnChange = { this.handleOnChange } data = {this.state} setFlags = { this.setFlags }/>
+                <Signup handleOnChange = { this.handleOnChange } data = {this.state}  setFlags = { this.setFlags }/>
                 <Overlay toggleClassName={ this.toggleClassName } reset = { this.reset } />
         
         

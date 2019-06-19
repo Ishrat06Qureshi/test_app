@@ -11,29 +11,12 @@ state = {
         address:"",
         email:"",
         password:"" ,
-        errors:{},
         isLoading:false,   
         errMsg:"",
-        successfullyRegister :false,
-       
+        successfullyRegister :false, 
 }
 
 
-reset = () => {
-    // Object.keys(this.state).map((key, index) => {
-    //     this.setState({[key] : ""});
-    //  });
-      return this.setState(({
-        name:"",
-        number:"",
-        address:"",
-        email:"",
-        password:"" ,
-        errors:{},  
-        errMsg:"",
-     
-     }))
-};
 
 
 handleSubmit = ( event ) => {
@@ -41,32 +24,27 @@ handleSubmit = ( event ) => {
         event.preventDefault()
         
         const {  password  , email  , name , number , address}  = this.props.data;
+        const {setFlags } = this.props 
+     
         const {errors} = dataValidation({ name , email , password , number , address });
         if(Object.keys(errors).length ){
-
-             return  this.setState(({ errors  ,
-                isLoading:false,
-                successfullyRegister:false,
-                errMsg:""
-             }))
+            return setFlags({ errors , 
+                isLoading:false ,
+                 successfullyRegister:false  })
         }
-        this.setState(({isLoading:true}))
+
+        setFlags({ isLoading:true , errors:{} })
         
+
         axios.post("/StudentRegistration" , {name , email , password , number , address }).
         then(( res ) => {
-            this.setState(({
-                successfullyRegister:true,
-                isLoading:false
-            }))
-            this.reset()
+            return setFlags({  isLoading:false , 
+                successfullyRegister:true  })
         }).
         catch(err => 
             {
                 const {msg} = err.response.data
-                this.setState(({
-                    isLoading:false,
-                    errMsg:msg,
-                errors:{}}))
+                return setFlags({ errors:{} , isLoading:false , successfullyRegister:false , errMsg:msg })
             } )
     };
         
@@ -74,8 +52,9 @@ handleSubmit = ( event ) => {
    
     render(){
          const { handleOnChange , data  } = this.props
-        const {   errors  , isLoading , errMsg  , successfullyRegister } = this.state 
-        const { password  , email  , name , number , address } = data 
+        const { password  , email  , name , number , address  , isLoading , errors , errMsg , successfullyRegister } = data 
+
+        console.log( this.props)
         return (<div className=" form-container sign-up-container ">
                
               <form onSubmit = { this.handleSubmit}>
@@ -88,8 +67,8 @@ handleSubmit = ( event ) => {
 
           {isLoading ? <Loader/> : 
           ( successfullyRegister ? <span> You have been successfully Register please login to continue further</span> : 
-           <div>        
-           { errMsg ? <span style = {{color:"red"}}>{ errMsg}</span>:null}
+           <div>        { errMsg ? <span style = {{color:"red"}}>{ errMsg}</span>:null}
+           
 
            <input type="text"  name = "name"  placeholder  ="name" value={ name } onChange = {handleOnChange}/>
            {errors.name ? <p style= {{color:'red' , marginLeft:'20px' , marginTop:"0px" , marginBottom:"0px"}}>{errors.name}</p> : null  }
