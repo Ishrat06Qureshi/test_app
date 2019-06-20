@@ -119,18 +119,18 @@ const secretKey = "sc_testApp"
 //         return res.status(200).json({user,})
 //         // bcrypt.compare( password , user.password ) .then(( res) => {
                     
-//         //             jwt.sign( 
-//         //                 { id:user.id } , 
-//         //                 secretKey,
-//         //                 {expiresIn : "2m"},
-//         //                 (err , token ) => {
-//         //                     if( err ) throw err;
-//         //                     return res.json({
-//         //                         token,
-//         //                         user,
-//         //                     })
-//         //                 })
-//         //        }).catch( err => {throw err} )
+            //         jwt.sign( 
+            //             { id:user.id } , 
+            //             secretKey,
+            //             {expiresIn : "2m"},
+            //             (err , token ) => {
+            //                 if( err ) throw err;
+            //                 return res.json({
+            //                     token,
+            //                     user,
+            //                 })
+            //             })
+            //    })
 //             // jwt.sign( 
 //             //     { id:user.id } , 
 //             //     secretKey,
@@ -152,25 +152,6 @@ const secretKey = "sc_testApp"
 
 
 
-
-// router.get("/get" , (req , res) => {
-//     return res.send("get")
-// } )
-// router.delete("/delete" , (req , res) => {
-//     return res.send("delete")
-// } )
-// router.put("/put" , (req , res) => {
-//     return res.send("put")
-// } )
-
-// router.get("/admin" , (req , res) => {
-//     return res.send("admin testing")
-// } )
-
-
-// router.get("/demo" , (req , res) => {
-//     return res.send("demo")
-// } )
 
 
 
@@ -219,8 +200,6 @@ const secretKey = "sc_testApp"
 //     })
 
 // })
-
-
 
 
 

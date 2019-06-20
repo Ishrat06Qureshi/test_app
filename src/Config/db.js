@@ -7,5 +7,6 @@ mongoose.connect('mongodb://localhost:27017/testapp', {useNewUrlParser: true} , 
         console.log("something went wrong")
     }
 });
+require("../Models/studentModels");
 
 module.exports = mongoose
